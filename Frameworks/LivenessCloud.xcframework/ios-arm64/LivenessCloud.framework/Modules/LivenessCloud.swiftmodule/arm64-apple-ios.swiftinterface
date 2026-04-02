@@ -1,0 +1,776 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name LivenessCloud
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import ARKit
+import AVFoundation
+import CommonCrypto
+import Compression
+import CoreGraphics
+import CoreMedia
+import CoreVideo
+import CryptoKit
+import Foundation
+@_exported import LivenessCloud
+import LocalAuthentication
+import Metal
+import MetalKit
+import MobileCoreServices
+import Security
+import Swift
+import UIKit
+import Vision
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+open class CodableTransform<T> : LivenessCloud.TransformType where T : Swift.Decodable, T : Swift.Encodable {
+  public typealias Object = T
+  public typealias JSON = Any
+  public init()
+  open func transformFromJSON(_ value: Any?) -> LivenessCloud.CodableTransform<T>.Object?
+  open func transformToJSON(_ value: T?) -> Any?
+  @objc deinit
+}
+extension Foundation.DateFormatter {
+  convenience public init(withFormat format: Swift.String, locale: Swift.String)
+}
+open class ISO8601DateTransform : LivenessCloud.DateFormatterTransform {
+  public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class SignManagement : ObjectiveC.NSObject {
+  @objc public static let shared: LivenessCloud.SignManagement
+  @objc override dynamic public init()
+  @objc deinit
+}
+@available(iOS 13.0, *)
+extension LivenessCloud.SignManagement {
+  @objc dynamic public func createJWSRequestBody(parameter: [Swift.String : Any], publicKey: Swift.String, privateKey: Swift.String) -> Foundation.Data?
+  @objc dynamic public func createJSONFromJWS(jws: Swift.String, privateKey: Swift.String, publicKey: Swift.String) -> Swift.String
+}
+@objc public enum SignMananagerError : Swift.Int, Swift.Error {
+  case badParameter
+  case joserError
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public static var _nsErrorDomain: Swift.String {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+open class CustomDateFormatTransform : LivenessCloud.DateFormatterTransform {
+  public init(formatString: Swift.String)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @available(iOS 13.0, *)
+@objc public class Networking : ObjectiveC.NSObject {
+  @objc public static let shared: LivenessCloud.Networking
+  @objc public func setup(appId: Swift.String, logLevel: LivenessCloud.LogLevel = .debug, url: Swift.String, publicKey: Swift.String, privateKey: Swift.String, deviceId: Swift.String = "")
+  @objc public func generateDeviceInfor(deviceId: Swift.String = "", additionParam: [Swift.String : Any] = [:], paramHeader: [Swift.String : Swift.String] = [:], ownerId: Swift.String = "") -> LivenessCloud.LivenessResponse
+  @objc public func resetDeviceInfo()
+  @objc override dynamic public init()
+  @objc deinit
+}
+@available(iOS 13.0, *)
+extension LivenessCloud.Networking {
+  #if compiler(>=5.3) && $AsyncAwait
+  public func doThermalFaceAntiSpoofingCheck(normalImage: UIKit.UIImage, thermalImage: UIKit.UIImage) async throws -> [Swift.String : Any]
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  public func doFaceAntiSpoofingCheck(image: UIKit.UIImage) async throws -> [Swift.String : Any]
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  public func doFlashFaceAntiSpoofingCheck(image: UIKit.UIImage, color: Swift.Int) async throws -> [Swift.String : Any]
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc dynamic public func initTransaction(duration: Swift.Int = 30, additionParam: [Swift.String : Any] = [:], paramHeader: [Swift.String : Swift.String] = [:], clientTransactionId: Swift.String = "") async throws -> LivenessCloud.LivenessResponse
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc dynamic public func registerFace(faceImage: UIKit.UIImage, additionParam: [Swift.String : Any] = [:], paramHeader: [Swift.String : Swift.String] = [:]) async throws -> LivenessCloud.LivenessResponse
+  #endif
+}
+public struct MultipartRequest {
+  public let boundary: Swift.String
+  public init(boundary: Swift.String = UUID().uuidString)
+  public mutating func add(key: Swift.String, value: Swift.String)
+  public mutating func add(key: Swift.String, fileName: Swift.String, fileMimeType: Swift.String, fileData: Foundation.Data)
+  public var httpContentTypeHeadeValue: Swift.String {
+    get
+  }
+  public var httpBody: Foundation.Data {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @available(iOS 13.0, *)
+@objc public class LivenessCalculator : ObjectiveC.NSObject {
+  public var isValidating: Swift.Bool
+  public var additionHeader: [Swift.String : Swift.String]
+  public var additionParam: [Swift.String : Any]
+  @objc public func calculateLiveness(transactionId: Swift.String = "", frame: ARKit.ARFrame, isOnlyLiveness: Swift.Bool = false, onDone: ((Swift.Bool, Swift.Float, Swift.Float, Swift.Bool, Swift.String, UIKit.UIImage, LivenessCloud.LivenessResult?) -> Swift.Void)?)
+  @objc override dynamic public init()
+  @objc deinit
+}
+open class KeychainSwift {
+  open var lastResultCode: Darwin.OSStatus
+  open var accessGroup: Swift.String?
+  open var synchronizable: Swift.Bool
+  public init()
+  public init(keyPrefix: Swift.String)
+  @discardableResult
+  open func set(_ value: Swift.String, forKey key: Swift.String, withAccess access: LivenessCloud.KeychainSwiftAccessOptions? = nil) -> Swift.Bool
+  @discardableResult
+  open func set(_ value: Foundation.Data, forKey key: Swift.String, withAccess access: LivenessCloud.KeychainSwiftAccessOptions? = nil) -> Swift.Bool
+  @discardableResult
+  open func set(_ value: Swift.Bool, forKey key: Swift.String, withAccess access: LivenessCloud.KeychainSwiftAccessOptions? = nil) -> Swift.Bool
+  open func get(_ key: Swift.String) -> Swift.String?
+  open func getData(_ key: Swift.String, asReference: Swift.Bool = false) -> Foundation.Data?
+  open func getBool(_ key: Swift.String) -> Swift.Bool?
+  @discardableResult
+  open func delete(_ key: Swift.String) -> Swift.Bool
+  public var allKeys: [Swift.String] {
+    get
+  }
+  @discardableResult
+  open func clear() -> Swift.Bool
+  @objc deinit
+}
+@objc public enum LogLevel : Swift.Int, Swift.CaseIterable {
+  case verbose = 0
+  case debug = 1
+  case info = 2
+  case warning = 3
+  case error = 4
+  case none = 5
+  public init?(rawValue: Swift.Int)
+  public typealias AllCases = [LivenessCloud.LogLevel]
+  public typealias RawValue = Swift.Int
+  public static var allCases: [LivenessCloud.LogLevel] {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class Log {
+  public static var logLevel: LivenessCloud.LogLevel
+  public static var storeLogs: Swift.Bool
+  public static var logData: [Swift.String]
+  public class func verbose(_ msg: @autoclosure () -> Swift.String)
+  public class func debug(_ msg: @autoclosure () -> Swift.String)
+  public class func info(_ msg: @autoclosure () -> Swift.String)
+  public class func warning(_ msg: @autoclosure () -> Swift.String)
+  public class func error(_ msg: @autoclosure () -> Swift.String)
+  public class func clearStoredLogs()
+  @objc deinit
+}
+public func <- <T>(left: inout T, right: LivenessCloud.Map) where T : Swift.SignedInteger
+public func <- <T>(left: inout T?, right: LivenessCloud.Map) where T : Swift.SignedInteger
+public func <- <T>(left: inout T, right: LivenessCloud.Map) where T : Swift.UnsignedInteger
+public func <- <T>(left: inout T?, right: LivenessCloud.Map) where T : Swift.UnsignedInteger
+public struct DictionaryTransform<Key, Value> : LivenessCloud.TransformType where Key : Swift.Hashable, Key : Swift.RawRepresentable, Value : LivenessCloud.Mappable, Key.RawValue == Swift.String {
+  public init()
+  public func transformFromJSON(_ value: Any?) -> [Key : Value]?
+  public func transformToJSON(_ value: [Key : Value]?) -> Any?
+  public typealias JSON = Any
+  public typealias Object = [Key : Value]
+}
+open class TransformOf<ObjectType, JSONType> : LivenessCloud.TransformType {
+  public typealias Object = ObjectType
+  public typealias JSON = JSONType
+  public init(fromJSON: @escaping (JSONType?) -> ObjectType?, toJSON: @escaping (ObjectType?) -> JSONType?)
+  open func transformFromJSON(_ value: Any?) -> ObjectType?
+  open func transformToJSON(_ value: ObjectType?) -> JSONType?
+  @objc deinit
+}
+public struct KeychainSwiftConstants {
+  public static var accessGroup: Swift.String {
+    get
+  }
+  public static var accessible: Swift.String {
+    get
+  }
+  public static var attrAccount: Swift.String {
+    get
+  }
+  public static var attrSynchronizable: Swift.String {
+    get
+  }
+  public static var klass: Swift.String {
+    get
+  }
+  public static var matchLimit: Swift.String {
+    get
+  }
+  public static var returnData: Swift.String {
+    get
+  }
+  public static var valueData: Swift.String {
+    get
+  }
+  public static var returnReference: Swift.String {
+    get
+  }
+  public static var returnAttributes: Swift.String {
+    get
+  }
+  public static var secMatchLimitAll: Swift.String {
+    get
+  }
+}
+public struct ConfigData {
+  public var isActiveSmile: Swift.Bool
+  public var isActiveWink: Swift.Bool
+}
+@_inheritsConvenienceInitializers @available(iOS 13.0, *)
+@objc public class LivenessUtil : ObjectiveC.NSObject {
+  @objc public class func createLivenessDetector(previewView: UIKit.UIView, threshold: LivenessCloud.LivenessUtilitySensitivityThreshold = .medium, delay: Swift.Double = 0, smallFaceThreshold: Swift.Double = 0.35, debugging: Swift.Bool = false, delegate: (any LivenessCloud.LivenessUtilityDetectorDelegate)?, livenessMode: LivenessCloud.LivenessMode = .threeDimension, isWink: Swift.Bool = false, isSmile: Swift.Bool = false, isOnlyOneAction: Swift.Bool = false, frameTime: Swift.Double = 0.008, isOnlyLiveness: Swift.Bool = false, additionParam: [Swift.String : Any] = [:], additionHeader: [Swift.String : Swift.String] = [:]) -> LivenessCloud.LivenessUtilityDetector
+  @objc override dynamic public init()
+  @objc deinit
+}
+@available(iOS 13.0, *)
+@objc public protocol LivenessUtilityDetectorDelegate {
+  @objc optional func liveness(liveness: LivenessCloud.LivenessUtilityDetector, startLivenessAction action: LivenessCloud.LivenessAction)
+  @objc optional func liveness(liveness: LivenessCloud.LivenessUtilityDetector, didFail withError: LivenessCloud.LivenessError)
+  @objc optional func liveness(liveness: LivenessCloud.LivenessUtilityDetector, didFinish verificationImage: UIKit.UIImage, livenesScore: Swift.Float, faceMatchingScore: Swift.Float, result: Swift.Bool, message: Swift.String, videoURL: Foundation.URL?, response: LivenessCloud.LivenessResult?)
+}
+@_inheritsConvenienceInitializers @available(iOS 13.0, *)
+@objc public class LivenessUtilityDetector : ObjectiveC.NSObject {
+  weak public var delegate: (any LivenessCloud.LivenessUtilityDetectorDelegate)?
+  public var cardId: Swift.String
+  @objc public func getVerificationRequiresAndStartSession(transactionId: Swift.String = "") throws
+  @objc public func stopLiveness()
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public enum LivenessMode : Swift.Int {
+  case twoDimension
+  case threeDimension
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public protocol BaseMappable {
+  mutating func mapping(map: LivenessCloud.Map)
+}
+public protocol Mappable : LivenessCloud.BaseMappable {
+  init?(map: LivenessCloud.Map)
+}
+public protocol StaticMappable : LivenessCloud.BaseMappable {
+  static func objectForMapping(map: LivenessCloud.Map) -> (any LivenessCloud.BaseMappable)?
+}
+extension LivenessCloud.Mappable {
+  public init?(JSONString: Swift.String, context: (any LivenessCloud.MapContext)? = nil)
+  public init?(JSON: [Swift.String : Any], context: (any LivenessCloud.MapContext)? = nil)
+}
+extension LivenessCloud.BaseMappable {
+  public func toJSON() -> [Swift.String : Any]
+  public func toJSONString(prettyPrint: Swift.Bool = false) -> Swift.String?
+}
+extension Swift.Array where Element : LivenessCloud.BaseMappable {
+  public init?(JSONString: Swift.String, context: (any LivenessCloud.MapContext)? = nil)
+  public init(JSONArray: [[Swift.String : Any]], context: (any LivenessCloud.MapContext)? = nil)
+  public func toJSON() -> [[Swift.String : Any]]
+  public func toJSONString(prettyPrint: Swift.Bool = false) -> Swift.String?
+}
+extension Swift.Set where Element : LivenessCloud.BaseMappable {
+  public init?(JSONString: Swift.String, context: (any LivenessCloud.MapContext)? = nil)
+  public init?(JSONArray: [[Swift.String : Any]], context: (any LivenessCloud.MapContext)? = nil)
+  public func toJSON() -> [[Swift.String : Any]]
+  public func toJSONString(prettyPrint: Swift.Bool = false) -> Swift.String?
+}
+public func base32Encode(_ data: Foundation.Data) -> Swift.String
+public func base32HexEncode(_ data: Foundation.Data) -> Swift.String
+public func base32DecodeToData(_ string: Swift.String) -> Foundation.Data?
+public func base32HexDecodeToData(_ string: Swift.String) -> Foundation.Data?
+public func base32Encode(_ array: [Swift.UInt8]) -> Swift.String
+public func base32HexEncode(_ array: [Swift.UInt8]) -> Swift.String
+public func base32Decode(_ string: Swift.String) -> [Swift.UInt8]?
+public func base32HexDecode(_ string: Swift.String) -> [Swift.UInt8]?
+extension Swift.String {
+  public var base32DecodedData: Foundation.Data? {
+    get
+  }
+  public var base32EncodedString: Swift.String {
+    get
+  }
+  public func base32DecodedString(_ encoding: Swift.String.Encoding = .utf8) -> Swift.String?
+  public var base32HexDecodedData: Foundation.Data? {
+    get
+  }
+  public var base32HexEncodedString: Swift.String {
+    get
+  }
+  public func base32HexDecodedString(_ encoding: Swift.String.Encoding = .utf8) -> Swift.String?
+}
+extension Foundation.Data {
+  public var base32EncodedString: Swift.String {
+    get
+  }
+  public var base32EncodedData: Foundation.Data {
+    get
+  }
+  public var base32DecodedData: Foundation.Data? {
+    get
+  }
+  public var base32HexEncodedString: Swift.String {
+    get
+  }
+  public var base32HexEncodedData: Foundation.Data {
+    get
+  }
+  public var base32HexDecodedData: Foundation.Data? {
+    get
+  }
+}
+open class NSDecimalNumberTransform : LivenessCloud.TransformType {
+  public typealias Object = Foundation.NSDecimalNumber
+  public typealias JSON = Swift.String
+  public init()
+  open func transformFromJSON(_ value: Any?) -> Foundation.NSDecimalNumber?
+  open func transformToJSON(_ value: Foundation.NSDecimalNumber?) -> Swift.String?
+  @objc deinit
+}
+open class DateTransform : LivenessCloud.TransformType {
+  public typealias Object = Foundation.Date
+  public typealias JSON = Swift.Double
+  public enum Unit : Foundation.TimeInterval {
+    case seconds
+    case milliseconds
+    public init?(rawValue: Foundation.TimeInterval)
+    public typealias RawValue = Foundation.TimeInterval
+    public var rawValue: Foundation.TimeInterval {
+      get
+    }
+  }
+  public init(unit: LivenessCloud.DateTransform.Unit = .seconds)
+  open func transformFromJSON(_ value: Any?) -> Foundation.Date?
+  open func transformToJSON(_ value: Foundation.Date?) -> Swift.Double?
+  @objc deinit
+}
+infix operator <- : DefaultPrecedence
+infix operator >>> : DefaultPrecedence
+public func <- <T>(left: inout T, right: LivenessCloud.Map)
+public func >>> <T>(left: T, right: LivenessCloud.Map)
+public func <- <T>(left: inout T?, right: LivenessCloud.Map)
+public func >>> <T>(left: T?, right: LivenessCloud.Map)
+public func <- <T>(left: inout T, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func >>> <T>(left: T, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func <- <T>(left: inout T?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func >>> <T>(left: T?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func <- <T>(left: inout Swift.Dictionary<Swift.String, T>, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func >>> <T>(left: Swift.Dictionary<Swift.String, T>, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func <- <T>(left: inout Swift.Dictionary<Swift.String, T>?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func >>> <T>(left: Swift.Dictionary<Swift.String, T>?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func <- <T>(left: inout Swift.Dictionary<Swift.String, [T]>, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func >>> <T>(left: Swift.Dictionary<Swift.String, [T]>, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func <- <T>(left: inout Swift.Dictionary<Swift.String, [T]>?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func >>> <T>(left: Swift.Dictionary<Swift.String, [T]>?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func <- <T>(left: inout Swift.Array<T>, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func >>> <T>(left: Swift.Array<T>, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func <- <T>(left: inout Swift.Array<T>?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func >>> <T>(left: Swift.Array<T>?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func <- <T>(left: inout Swift.Array<Swift.Array<T>>, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func >>> <T>(left: Swift.Array<Swift.Array<T>>, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func <- <T>(left: inout Swift.Array<Swift.Array<T>>?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func >>> <T>(left: Swift.Array<Swift.Array<T>>?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable
+public func <- <T>(left: inout Swift.Set<T>, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable, T : Swift.Hashable
+public func >>> <T>(left: Swift.Set<T>, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable, T : Swift.Hashable
+public func <- <T>(left: inout Swift.Set<T>?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable, T : Swift.Hashable
+public func >>> <T>(left: Swift.Set<T>?, right: LivenessCloud.Map) where T : LivenessCloud.BaseMappable, T : Swift.Hashable
+open class DataTransform : LivenessCloud.TransformType {
+  public typealias Object = Foundation.Data
+  public typealias JSON = Swift.String
+  public init()
+  open func transformFromJSON(_ value: Any?) -> Foundation.Data?
+  open func transformToJSON(_ value: Foundation.Data?) -> Swift.String?
+  @objc deinit
+}
+public protocol MapContext {
+}
+final public class Map {
+  final public let mappingType: LivenessCloud.MappingType
+  final public var JSON: [Swift.String : Any] {
+    get
+  }
+  final public var isKeyPresent: Swift.Bool {
+    get
+  }
+  final public var currentValue: Any? {
+    get
+  }
+  final public var currentKey: Swift.String? {
+    get
+  }
+  final public var nestedKeyDelimiter: Swift.String {
+    get
+  }
+  final public var context: (any LivenessCloud.MapContext)?
+  final public var shouldIncludeNilValues: Swift.Bool
+  final public let toObject: Swift.Bool
+  public init(mappingType: LivenessCloud.MappingType, JSON: [Swift.String : Any], toObject: Swift.Bool = false, context: (any LivenessCloud.MapContext)? = nil, shouldIncludeNilValues: Swift.Bool = false)
+  final public subscript(key: Swift.String) -> LivenessCloud.Map {
+    get
+  }
+  final public subscript(key: Swift.String, delimiter delimiter: Swift.String) -> LivenessCloud.Map {
+    get
+  }
+  final public subscript(key: Swift.String, nested nested: Swift.Bool) -> LivenessCloud.Map {
+    get
+  }
+  final public subscript(key: Swift.String, nested nested: Swift.Bool, delimiter delimiter: Swift.String) -> LivenessCloud.Map {
+    get
+  }
+  final public subscript(key: Swift.String, ignoreNil ignoreNil: Swift.Bool) -> LivenessCloud.Map {
+    get
+  }
+  final public subscript(key: Swift.String, delimiter delimiter: Swift.String, ignoreNil ignoreNil: Swift.Bool) -> LivenessCloud.Map {
+    get
+  }
+  final public subscript(key: Swift.String, nested nested: Swift.Bool, ignoreNil ignoreNil: Swift.Bool) -> LivenessCloud.Map {
+    get
+  }
+  final public subscript(key: Swift.String, nested nested: Swift.Bool?, delimiter delimiter: Swift.String, ignoreNil ignoreNil: Swift.Bool) -> LivenessCloud.Map {
+    get
+  }
+  final public func value<T>() -> T?
+  @objc deinit
+}
+extension LivenessCloud.Map {
+  final public func value<T>(_ key: Swift.String, default: T.Object, using transform: T) throws -> T.Object where T : LivenessCloud.TransformType
+  final public func value<T>(_ key: Swift.String, default: T) throws -> T
+  final public func value<T>(_ key: Swift.String, default: [T]) -> [T] where T : LivenessCloud.BaseMappable
+  final public func value<T>(_ key: Swift.String, default: T) throws -> T where T : LivenessCloud.BaseMappable
+}
+public enum KeychainSwiftAccessOptions {
+  case accessibleWhenUnlocked
+  case accessibleWhenUnlockedThisDeviceOnly
+  case accessibleAfterFirstUnlock
+  case accessibleAfterFirstUnlockThisDeviceOnly
+  case accessibleWhenPasscodeSetThisDeviceOnly
+  public static func == (a: LivenessCloud.KeychainSwiftAccessOptions, b: LivenessCloud.KeychainSwiftAccessOptions) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public func <- <T>(left: inout T, right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: T, right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func <- <T>(left: inout T?, right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: T?, right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func <- <T>(left: inout [T], right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: [T], right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func <- <T>(left: inout [T]?, right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: [T]?, right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func <- <T>(left: inout [Swift.String : T], right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: [Swift.String : T], right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func <- <T>(left: inout [Swift.String : T]?, right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: [Swift.String : T]?, right: LivenessCloud.Map) where T : Swift.RawRepresentable
+public protocol TransformType {
+  associatedtype Object
+  associatedtype JSON
+  func transformFromJSON(_ value: Any?) -> Self.Object?
+  func transformToJSON(_ value: Self.Object?) -> Self.JSON?
+}
+open class DateFormatterTransform : LivenessCloud.TransformType {
+  public typealias Object = Foundation.Date
+  public typealias JSON = Swift.String
+  final public let dateFormatter: Foundation.DateFormatter
+  public init(dateFormatter: Foundation.DateFormatter)
+  open func transformFromJSON(_ value: Any?) -> Foundation.Date?
+  open func transformToJSON(_ value: Foundation.Date?) -> Swift.String?
+  @objc deinit
+}
+open class EnumTransform<T> : LivenessCloud.TransformType where T : Swift.RawRepresentable {
+  public typealias Object = T
+  public typealias JSON = T.RawValue
+  public init()
+  open func transformFromJSON(_ value: Any?) -> T?
+  open func transformToJSON(_ value: T?) -> T.RawValue?
+  @objc deinit
+}
+@objc public enum LivenessError : Swift.Int, Swift.Error {
+  case noFaceDetected
+  case smallFace
+  case badImage
+  case noVerificationInstruction
+  case badResponse
+  case twoFace
+  case hangError
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public static var _nsErrorDomain: Swift.String {
+    get
+  }
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum LivenessAction : Swift.Int {
+  case detectingFace
+  case eyesLookIn = 1
+  case smile
+  case wink
+  case headPoseUp
+  case headPoseDown
+  case headPoseLeft
+  case headPoseRight
+  case startVerification
+  case fetchConfig
+  case checkAction
+  case processing
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @objc public class ImageAction : ObjectiveC.NSObject {
+  public var action: LivenessCloud.LivenessAction?
+  public var image: Swift.String?
+  @objc deinit
+}
+@objc public enum LivenessUtilitySensitivityThreshold : Swift.Int {
+  case low = 1
+  case medium
+  case high
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 13.0, *)
+@objc public class DepthLivenessDetector : LivenessCloud.LivenessUtilityDetector {
+  @objc public init(previewView: UIKit.UIView, threshold: LivenessCloud.LivenessUtilitySensitivityThreshold = .high, delay: Swift.Double = 0, smallFaceThreshold: Swift.Double = 0.35, debugging: Swift.Bool = true, isWink: Swift.Bool = false, isSmile: Swift.Bool = false, isOnlyOneAction: Swift.Bool = false, transactionId: Swift.String = "", frameTime: Swift.Double = 0.008, isOnlyLiveness: Swift.Bool = false)
+  @objc public func startLivenessDetection()
+  @objc override public func getVerificationRequiresAndStartSession(transactionId: Swift.String = "") throws
+  @objc override public func stopLiveness()
+  @objc deinit
+}
+@available(iOS 13.0, *)
+extension LivenessCloud.DepthLivenessDetector : ARKit.ARSessionDelegate {
+  @objc dynamic public func session(_ session: ARKit.ARSession, didUpdate frame: ARKit.ARFrame)
+  @objc dynamic public func session(_ session: ARKit.ARSession, didUpdate anchors: [ARKit.ARAnchor])
+}
+@available(iOS 13.0, *)
+extension LivenessCloud.DepthLivenessDetector : ARKit.ARSCNViewDelegate {
+  @objc dynamic public func renderer(_ renderer: any SceneKit.SCNSceneRenderer, didRemove node: SceneKit.SCNNode, for anchor: ARKit.ARAnchor)
+  @objc dynamic public func renderer(_ renderer: any SceneKit.SCNSceneRenderer, didAdd node: SceneKit.SCNNode, for anchor: ARKit.ARAnchor)
+  @objc dynamic public func renderer(_ renderer: any SceneKit.SCNSceneRenderer, didUpdate node: SceneKit.SCNNode, for anchor: ARKit.ARAnchor)
+}
+open class URLTransform : LivenessCloud.TransformType {
+  public typealias Object = Foundation.URL
+  public typealias JSON = Swift.String
+  public init(shouldEncodeURLString: Swift.Bool = false, allowedCharacterSet: Foundation.CharacterSet = .urlQueryAllowed)
+  open func transformFromJSON(_ value: Any?) -> Foundation.URL?
+  open func transformToJSON(_ value: Foundation.URL?) -> Swift.String?
+  @objc deinit
+}
+public func <- <Transform>(left: inout Transform.Object, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func >>> <Transform>(left: Transform.Object, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func <- <Transform>(left: inout Transform.Object?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func >>> <Transform>(left: Transform.Object?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func <- <Transform>(left: inout [Transform.Object], right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func >>> <Transform>(left: [Transform.Object], right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func <- <Transform>(left: inout [Transform.Object]?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func >>> <Transform>(left: [Transform.Object]?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func <- <Transform>(left: inout [Swift.String : Transform.Object], right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func >>> <Transform>(left: [Swift.String : Transform.Object], right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func <- <Transform>(left: inout [Swift.String : Transform.Object]?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func >>> <Transform>(left: [Swift.String : Transform.Object]?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func <- <Transform>(left: inout Transform.Object, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func >>> <Transform>(left: Transform.Object, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func <- <Transform>(left: inout Transform.Object?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func >>> <Transform>(left: Transform.Object?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func <- <Transform>(left: inout Swift.Dictionary<Swift.String, Transform.Object>, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func >>> <Transform>(left: Swift.Dictionary<Swift.String, Transform.Object>, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func <- <Transform>(left: inout Swift.Dictionary<Swift.String, Transform.Object>?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func >>> <Transform>(left: Swift.Dictionary<Swift.String, Transform.Object>?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func <- <Transform>(left: inout Swift.Dictionary<Swift.String, [Transform.Object]>, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func >>> <Transform>(left: Swift.Dictionary<Swift.String, [Transform.Object]>, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func <- <Transform>(left: inout Swift.Dictionary<Swift.String, [Transform.Object]>?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func >>> <Transform>(left: Swift.Dictionary<Swift.String, [Transform.Object]>?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func <- <Transform>(left: inout Swift.Array<Transform.Object>, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func >>> <Transform>(left: Swift.Array<Transform.Object>, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func <- <Transform>(left: inout Swift.Array<Transform.Object>?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func >>> <Transform>(left: Swift.Array<Transform.Object>?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable
+public func <- <Transform>(left: inout [[Transform.Object]], right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func >>> <Transform>(left: [[Transform.Object]], right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func <- <Transform>(left: inout [[Transform.Object]]?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func >>> <Transform>(left: [[Transform.Object]]?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType
+public func <- <Transform>(left: inout Swift.Set<Transform.Object>, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable, Transform.Object : Swift.Hashable
+public func >>> <Transform>(left: Swift.Set<Transform.Object>, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable, Transform.Object : Swift.Hashable
+public func <- <Transform>(left: inout Swift.Set<Transform.Object>?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable, Transform.Object : Swift.Hashable
+public func >>> <Transform>(left: Swift.Set<Transform.Object>?, right: (LivenessCloud.Map, Transform)) where Transform : LivenessCloud.TransformType, Transform.Object : LivenessCloud.BaseMappable, Transform.Object : Swift.Hashable
+public protocol ImmutableMappable : LivenessCloud.BaseMappable {
+  init(map: LivenessCloud.Map) throws
+}
+extension LivenessCloud.ImmutableMappable {
+  public func mapping(map: LivenessCloud.Map)
+  public init(JSONString: Swift.String, context: (any LivenessCloud.MapContext)? = nil) throws
+  public init(JSON: [Swift.String : Any], context: (any LivenessCloud.MapContext)? = nil) throws
+  public init(JSONObject: Any, context: (any LivenessCloud.MapContext)? = nil) throws
+}
+extension LivenessCloud.Map {
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> T
+  final public func value<Transform>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", using transform: Transform, file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> Transform.Object where Transform : LivenessCloud.TransformType
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> T where T : Swift.RawRepresentable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> T? where T : Swift.RawRepresentable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [T] where T : Swift.RawRepresentable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [T]? where T : Swift.RawRepresentable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> T where T : LivenessCloud.BaseMappable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> T? where T : LivenessCloud.BaseMappable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [T] where T : LivenessCloud.BaseMappable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [T]? where T : LivenessCloud.BaseMappable
+  final public func value<Transform>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", using transform: Transform, file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [Transform.Object] where Transform : LivenessCloud.TransformType
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [Swift.String : T] where T : LivenessCloud.BaseMappable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [Swift.String : T]? where T : LivenessCloud.BaseMappable
+  final public func value<Transform>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", using transform: Transform, file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [Swift.String : Transform.Object] where Transform : LivenessCloud.TransformType
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [[T]]? where T : LivenessCloud.BaseMappable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [[T]] where T : LivenessCloud.BaseMappable
+  final public func value<Transform>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", using transform: Transform, file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [[Transform.Object]] where Transform : LivenessCloud.TransformType
+}
+extension LivenessCloud.Mapper where N : LivenessCloud.ImmutableMappable {
+  final public func map(JSON: [Swift.String : Any]) throws -> N
+  final public func map(JSONString: Swift.String) throws -> N
+  final public func map(JSONObject: Any) throws -> N
+  final public func mapArray(JSONArray: [[Swift.String : Any]]) throws -> [N]
+  final public func mapArray(JSONString: Swift.String) throws -> [N]
+  final public func mapArray(JSONObject: Any) throws -> [N]
+  final public func mapDictionary(JSONString: Swift.String) throws -> [Swift.String : N]
+  final public func mapDictionary(JSONObject: Any?) throws -> [Swift.String : N]
+  final public func mapDictionary(JSON: [Swift.String : [Swift.String : Any]]) throws -> [Swift.String : N]
+  final public func mapDictionaryOfArrays(JSONObject: Any?) throws -> [Swift.String : [N]]
+  final public func mapDictionaryOfArrays(JSON: [Swift.String : [[Swift.String : Any]]]) throws -> [Swift.String : [N]]
+  final public func mapArrayOfArrays(JSONObject: Any?) throws -> [[N]]
+}
+@objc @objcMembers public class LivenessResponse : ObjectiveC.NSObject, LivenessCloud.Mappable {
+  @objc public var status: Swift.Int
+  @objc public var data: Swift.String
+  @objc public var signature: Swift.String
+  required public init?(map: LivenessCloud.Map)
+  public func mapping(map: LivenessCloud.Map)
+  @objc deinit
+}
+@objc @objcMembers public class LivenessResult : ObjectiveC.NSObject, LivenessCloud.Mappable {
+  @objc public var status: Swift.Int
+  @objc public var data: [Swift.String : Any]
+  @objc public var signature: Swift.String
+  @objc public var livenesScore: Swift.Float
+  @objc public var faceMatchingScore: Swift.Float
+  @objc public var succes: Swift.Bool
+  @objc public var sim: Swift.Float
+  @objc public var livenessType: Swift.String
+  @objc public var mess: Swift.String
+  @objc public var code: Swift.String
+  @objc public var request_id: Swift.String
+  required public init?(map: LivenessCloud.Map)
+  public func mapping(map: LivenessCloud.Map)
+  @objc deinit
+}
+public enum MappingType {
+  case fromJSON
+  case toJSON
+  public static func == (a: LivenessCloud.MappingType, b: LivenessCloud.MappingType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+final public class Mapper<N> where N : LivenessCloud.BaseMappable {
+  final public var context: (any LivenessCloud.MapContext)?
+  final public var shouldIncludeNilValues: Swift.Bool
+  public init(context: (any LivenessCloud.MapContext)? = nil, shouldIncludeNilValues: Swift.Bool = false)
+  final public func map(JSONObject: Any?, toObject object: N) -> N
+  final public func map(JSONString: Swift.String, toObject object: N) -> N
+  final public func map(JSON: [Swift.String : Any], toObject object: N) -> N
+  final public func map(JSONString: Swift.String) -> N?
+  final public func map(JSONObject: Any?) -> N?
+  final public func map(JSON: [Swift.String : Any]) -> N?
+  final public func mapArray(JSONString: Swift.String) -> [N]?
+  final public func mapArray(JSONObject: Any?) -> [N]?
+  final public func mapArray(JSONArray: [[Swift.String : Any]]) -> [N]
+  final public func mapDictionary(JSONString: Swift.String) -> [Swift.String : N]?
+  final public func mapDictionary(JSONObject: Any?) -> [Swift.String : N]?
+  final public func mapDictionary(JSON: [Swift.String : [Swift.String : Any]]) -> [Swift.String : N]?
+  final public func mapDictionary(JSONObject: Any?, toDictionary dictionary: [Swift.String : N]) -> [Swift.String : N]
+  final public func mapDictionary(JSON: [Swift.String : [Swift.String : Any]], toDictionary dictionary: [Swift.String : N]) -> [Swift.String : N]
+  final public func mapDictionaryOfArrays(JSONObject: Any?) -> [Swift.String : [N]]?
+  final public func mapDictionaryOfArrays(JSON: [Swift.String : [[Swift.String : Any]]]) -> [Swift.String : [N]]?
+  final public func mapArrayOfArrays(JSONObject: Any?) -> [[N]]?
+  public static func parseJSONStringIntoDictionary(JSONString: Swift.String) -> [Swift.String : Any]?
+  public static func parseJSONString(JSONString: Swift.String) -> Any?
+  @objc deinit
+}
+extension LivenessCloud.Mapper {
+  final public func map(JSONfile: Swift.String) -> N?
+  final public func mapArray(JSONfile: Swift.String) -> [N]?
+}
+extension LivenessCloud.Mapper {
+  final public func toJSON(_ object: N) -> [Swift.String : Any]
+  final public func toJSONArray(_ array: [N]) -> [[Swift.String : Any]]
+  final public func toJSONDictionary(_ dictionary: [Swift.String : N]) -> [Swift.String : [Swift.String : Any]]
+  final public func toJSONDictionaryOfArrays(_ dictionary: [Swift.String : [N]]) -> [Swift.String : [[Swift.String : Any]]]
+  final public func toJSONString(_ object: N, prettyPrint: Swift.Bool = false) -> Swift.String?
+  final public func toJSONString(_ array: [N], prettyPrint: Swift.Bool = false) -> Swift.String?
+  public static func toJSONString(_ JSONObject: Any, prettyPrint: Swift.Bool) -> Swift.String?
+  public static func toJSONData(_ JSONObject: Any, options: Foundation.JSONSerialization.WritingOptions) -> Foundation.Data?
+}
+extension LivenessCloud.Mapper where N : Swift.Hashable {
+  final public func mapSet(JSONString: Swift.String) -> Swift.Set<N>?
+  final public func mapSet(JSONObject: Any?) -> Swift.Set<N>?
+  final public func mapSet(JSONArray: [[Swift.String : Any]]) -> Swift.Set<N>
+  final public func toJSONSet(_ set: Swift.Set<N>) -> [[Swift.String : Any]]
+  final public func toJSONString(_ set: Swift.Set<N>, prettyPrint: Swift.Bool = false) -> Swift.String?
+}
+open class HexColorTransform : LivenessCloud.TransformType {
+  public typealias Object = UIKit.UIColor
+  public typealias JSON = Swift.String
+  public init(prefixToJSON: Swift.Bool = false, alphaToJSON: Swift.Bool = false)
+  open func transformFromJSON(_ value: Any?) -> LivenessCloud.HexColorTransform.Object?
+  open func transformToJSON(_ value: LivenessCloud.HexColorTransform.Object?) -> LivenessCloud.HexColorTransform.JSON?
+  @objc deinit
+}
+public struct MapError : Swift.Error {
+  public var key: Swift.String?
+  public var currentValue: Any?
+  public var reason: Swift.String?
+  public var file: Swift.StaticString?
+  public var function: Swift.StaticString?
+  public var line: Swift.UInt?
+  public init(key: Swift.String?, currentValue: Any?, reason: Swift.String?, file: Swift.StaticString? = nil, function: Swift.StaticString? = nil, line: Swift.UInt? = nil)
+}
+extension LivenessCloud.MapError : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension LivenessCloud.SignMananagerError : Swift.Equatable {}
+extension LivenessCloud.SignMananagerError : Swift.Hashable {}
+extension LivenessCloud.SignMananagerError : Swift.RawRepresentable {}
+extension LivenessCloud.LogLevel : Swift.Equatable {}
+extension LivenessCloud.LogLevel : Swift.Hashable {}
+extension LivenessCloud.LogLevel : Swift.RawRepresentable {}
+extension LivenessCloud.LivenessMode : Swift.Equatable {}
+extension LivenessCloud.LivenessMode : Swift.Hashable {}
+extension LivenessCloud.LivenessMode : Swift.RawRepresentable {}
+extension LivenessCloud.DateTransform.Unit : Swift.Equatable {}
+extension LivenessCloud.DateTransform.Unit : Swift.Hashable {}
+extension LivenessCloud.DateTransform.Unit : Swift.RawRepresentable {}
+extension LivenessCloud.KeychainSwiftAccessOptions : Swift.Equatable {}
+extension LivenessCloud.KeychainSwiftAccessOptions : Swift.Hashable {}
+extension LivenessCloud.LivenessError : Swift.Equatable {}
+extension LivenessCloud.LivenessError : Swift.Hashable {}
+extension LivenessCloud.LivenessError : Swift.RawRepresentable {}
+extension LivenessCloud.LivenessAction : Swift.Equatable {}
+extension LivenessCloud.LivenessAction : Swift.Hashable {}
+extension LivenessCloud.LivenessAction : Swift.RawRepresentable {}
+extension LivenessCloud.LivenessUtilitySensitivityThreshold : Swift.Equatable {}
+extension LivenessCloud.LivenessUtilitySensitivityThreshold : Swift.Hashable {}
+extension LivenessCloud.LivenessUtilitySensitivityThreshold : Swift.RawRepresentable {}
+extension LivenessCloud.MappingType : Swift.Equatable {}
+extension LivenessCloud.MappingType : Swift.Hashable {}

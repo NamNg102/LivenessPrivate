@@ -16,19 +16,22 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "LivenessPrivate"
-  spec.version      = "1.1.3"
+  spec.version      = "1.1.4"
   spec.summary      = "A short description of LivenessPrivate."
   spec.homepage     = "https://github.com/stevienguyen1988/LivenessPrivate"
   spec.author           = { 'My Name' => 'myemail@example.com' }
   spec.license      = "MIT"
+  spec.source          = { :git => 'https://github.com/stevienguyen1988/LivenessPrivate.git', :tag => spec.version.to_s }
   
   spec.platform = :ios
   spec.ios.deployment_target = "11.0"
 
-  spec.source            = { :http => 'https://github.com/stevienguyen1988/LivenessPrivate/releases/download/1.1.3/LivenessCloud.zip' }
-  spec.vendored_frameworks = 'LivenessCloud/LivenessCloud.xcframework'
+  s.vendored_frameworks = [
+    'Frameworks/LivenessCloud.xcframework',
+  ]
 
 
+  spec.dependency 'KeychainSwift', '24.0.0'
   spec.swift_version = "5.0"
   spec.pod_target_xcconfig = {
     'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
