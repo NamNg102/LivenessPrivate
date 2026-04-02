@@ -26,7 +26,7 @@ Pod::Spec.new do |spec|
   spec.platform = :ios
   spec.ios.deployment_target = "11.0"
 
-  s.vendored_frameworks = [
+  spec.vendored_frameworks = [
     'Frameworks/LivenessCloud.xcframework',
   ]
 
